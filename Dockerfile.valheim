@@ -130,7 +130,7 @@ EXPOSE 2456/tcp 2457/tcp 2458/tcp
 EXPOSE 3000/tcp
 
 # Healthcheck to ensure the Valheim server is running
-HEALTHCHECK --interval=1m --timeout=3s CMD pidof valheim_server.x86_64 && { [ -z "$(ls ~/valheim/mono_crash* 2>/dev/null)" ] } || exit 1
+HEALTHCHECK --interval=1m --timeout=3s CMD pidof valheim_server.x86_64 && [ -z "$(ls ~/valheim/mono_crash* 2>/dev/null)" ] || exit 1
 
 # Define the entrypoint and command
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
