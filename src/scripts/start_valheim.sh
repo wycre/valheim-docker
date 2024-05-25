@@ -71,6 +71,14 @@ STEAM_GID=${PGID:=1000}
 # Source environment variables if env.sh exists
 [ -f "/env.sh" ] && source "/env.sh"
 
+# Move crashlogs out of server directory if they exist
+if compgen -G "/home/steam/valheim/mono_crash*" > /dev/null; then
+    if [ ! -d "/home/steam/valheim/crash_logs" ]; then
+        mkdir -p /home/steam/valheim/crash_logs
+    fi
+    mv /home/steam/valheim/mono_crash* /home/steam/valheim/crash_logs
+fi
+
 # Warn if running as root
 if [ "${STEAM_UID}" -eq 0 ] || [ "${STEAM_GID}" -eq 0 ]; then
   log "WARNING: You should not run the server as root! Please use a non-root user!"
